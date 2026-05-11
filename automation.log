@@ -1,0 +1,8 @@
+2026-05-07 11:08:19,135 - INFO - tests.test_home - Starting delete note API performance test
+2026-05-07 11:08:20,072 - INFO - tests.test_home - Delete response time: 0.5871226787567139 seconds
+2026-05-07 11:08:20,073 - INFO - tests.test_home - Delete note performance test passed
+2026-05-07 11:08:20,098 - INFO - tests.test_home - Starting unauthorized access test
+2026-05-07 11:08:20,459 - INFO - tests.test_home - Unauthorized Response Status: 401
+2026-05-07 11:08:20,459 - INFO - tests.test_home - Unauthorized access validation passed
+2026-05-11 14:56:15,540 - INFO - tests.test_home - Proper validation message is displayed for whitespace title.
+2026-05-11 15:12:12,018 - INFO - tests.test_home - Proper validation message is displayed for long title.
