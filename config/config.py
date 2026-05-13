@@ -1,3 +1,3 @@
 BASE_URL = "https://practice.expandtesting.com/notes/app"
-ECXE = "remote"
+ECXE = "local"
 BROWSER = "chrome"
