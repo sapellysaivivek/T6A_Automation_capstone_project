@@ -188,7 +188,7 @@ def test_create_note_whitespace_title(driver):
     login_page = LoginPage(driver)
     login_page.click_login("saiviveksapelly@gmail.com" , "142536475869")
     home_page_obj = home_page.HomePage(driver)
-    home_page_obj.create_note("Work","   ","This is a test note with whitespace title.",True)
+    home_page_obj.create_note("Work","           ","This is a test note with whitespace title.",True)
     bp = BasePage(driver)
     if bp.is_visible((By.XPATH, "//div[contains(text(),'Title must be between 4 and 100 characters')]")) or bp.is_visible((By.XPATH, "//div[contains(text(),'Title should be between 4 and 100 characters')]")):
         logger.info("Proper validation message is displayed for whitespace title.")

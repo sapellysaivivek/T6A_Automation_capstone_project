@@ -1,5 +1,9 @@
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import NoSuchElementException
+
+from ai.locator_healer import heal_locator
+
 from selenium.common.exceptions import (
     ElementClickInterceptedException,
     TimeoutException
@@ -14,12 +18,33 @@ class BasePage:
 
         self.driver = driver
         self.wait = WebDriverWait(driver, 20)
+    def find_element(self, by_locator):
+
+        by, value = by_locator
+
+        try:
+            return self.wait.until(
+            EC.visibility_of_element_located(
+                by_locator
+            )
+        )
+
+        except NoSuchElementException:
+
+            failed_locator = {
+                "strategy": str(by),
+                "value": value
+            }
+
+            return heal_locator(
+                self.driver,
+                failed_locator
+            )
+
 
     def click(self, by_locator):
 
-        element = self.wait.until(
-            EC.element_to_be_clickable(by_locator)
-        )
+        element = self.find_element(by_locator)
 
         self.driver.execute_script(
             "arguments[0].scrollIntoView({block: 'center'});",
@@ -38,18 +63,14 @@ class BasePage:
 
     def send_keys(self, by_locator, text):
 
-        element = self.wait.until(
-            EC.visibility_of_element_located(by_locator)
-        )
+        element = self.find_element(by_locator)
 
         element.clear()
         element.send_keys(text)
 
     def get_text(self, by_locator):
 
-        element = self.wait.until(
-            EC.visibility_of_element_located(by_locator)
-        )
+        element = self.find_element(by_locator)
 
         return element.text
 
@@ -57,9 +78,7 @@ class BasePage:
 
         try:
 
-            element = self.wait.until(
-                EC.visibility_of_element_located(by_locator)
-            )
+            element = self.find_element(by_locator)
 
             return element.is_displayed()
 
@@ -69,9 +88,7 @@ class BasePage:
 
     def select_dropdown(self, by_locator, text):
 
-        dropdown = self.wait.until(
-            EC.visibility_of_element_located(by_locator)
-        )
+        dropdown = self.find_element(by_locator)
 
         select = Select(dropdown)
 
@@ -79,9 +96,7 @@ class BasePage:
 
     def select_dropdown_value(self, by_locator, value):
 
-        dropdown = self.wait.until(
-            EC.visibility_of_element_located(by_locator)
-        )
+        dropdown = self.find_element(by_locator)
 
         select = Select(dropdown)
 
@@ -89,9 +104,7 @@ class BasePage:
 
     def check_checkbox(self, by_locator):
 
-        checkbox = self.wait.until(
-            EC.element_to_be_clickable(by_locator)
-        )
+        checkbox = self.find_element(by_locator)
 
         if not checkbox.is_selected():
 
@@ -99,9 +112,7 @@ class BasePage:
 
     def uncheck_checkbox(self, by_locator):
 
-        checkbox = self.wait.until(
-            EC.element_to_be_clickable(by_locator)
-        )
+        checkbox = self.find_element(by_locator)
 
         if checkbox.is_selected():
 
@@ -144,8 +155,6 @@ class BasePage:
     # CLEAR TEXT FIELD
     def clear_field(self, by_locator):
 
-        element = self.wait.until(
-            EC.visibility_of_element_located(by_locator)
-        )
+        element = self.find_element(by_locator)
 
         element.clear()
