@@ -1,5 +1,5 @@
 from selenium.webdriver.common.by import By
-
+import allure
 from pages.Base_Page import BasePage
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -30,114 +30,120 @@ class HomePage(BasePage):
 
 
     def click_add_notes(self):
+        with allure.step("Clicking on the 'Add Note' button"):
 
-        self.click(self.Add_Notes_Button)
+            self.click(self.Add_Notes_Button)
 
 
     def select_category(self, category):
+        with allure.step(f"Selecting category '{category}' from the dropdown"):
 
-        self.select_dropdown(
-            self.Category_Dropdown,
-            category
-        )
+            self.select_dropdown(
+                self.Category_Dropdown,
+                category
+            )
 
 
     def enter_title(self, title):
-
-        self.send_keys(
-            self.Title_Input,
-            title
-        )
+        with allure.step(f"Entering title '{title}' in the title input field"):
+            self.send_keys(
+                self.Title_Input,
+                title
+            )
 
 
     def enter_description(self, description):
-
-        self.send_keys(
-            self.Description_Input,
-            description
-        )
+        with allure.step(f"Entering description '{description}' in the description input field"):
+            self.send_keys(
+                self.Description_Input,
+                description
+            )
 
 
     def mark_completed(self):
+        with allure.step("Marking the note as completed by checking the checkbox"):
 
-        self.check_checkbox(
-            self.Completed_Checkbox
-        )
+            self.check_checkbox(
+                self.Completed_Checkbox
+            )
 
   
     def click_create(self):
-
-        self.click(
-            self.Create_Button
-        )
+        with allure.step("Clicking on the 'Create' button to create the note"):
+            self.click(
+                self.Create_Button
+            )
 
 
     def click_cancel(self):
-
-        self.click(
-            self.Cancel_Button
-        )
+        with allure.step("Clicking on the 'Cancel' button to cancel the note creation"):
+            self.click(
+                self.Cancel_Button
+            )
 
     def create_note(self,category,title,description,completed=False):
+        with allure.step(f"Creating a new note with title '{title}', category '{category}', and completed status '{completed}'"):
+            self.click_add_notes()
 
-        self.click_add_notes()
+            self.select_category(category)
 
-        self.select_category(category)
+            self.enter_title(title)
 
-        self.enter_title(title)
+            self.enter_description(description)
 
-        self.enter_description(description)
+            if completed:
 
-        if completed:
+                self.mark_completed()
 
-            self.mark_completed()
-
-        self.click_create()
+            self.click_create()
 
     def is_note_visible(self, title):
-
-        locator = (
+        with allure.step(f"Checking if the note with title '{title}' is visible on the page"):
+            locator = (
             By.XPATH,
             f"//h5[text()='{title}']"
         )
 
         return self.is_visible(locator)
 
+        
+
     
 
 
     def delete_note(self, title):
+        with allure.step(f"Deleting the note with title '{title}'"):
+            self.click((
+                By.XPATH,
+                f"//div[@data-testid='note-card-title' and text()='{title}']"
+                f"/ancestor::div[@data-testid='note-card']"
+                f"//button[@data-testid='note-delete']"
+            ))
 
-        self.click((
-            By.XPATH,
-            f"//div[@data-testid='note-card-title' and text()='{title}']"
-            f"/ancestor::div[@data-testid='note-card']"
-            f"//button[@data-testid='note-delete']"
-        ))
-
-        self.click((
-            By.XPATH,
-            "//button[@data-testid='note-delete-confirm']"
-        ))
+            self.click((
+                By.XPATH,
+                "//button[@data-testid='note-delete-confirm']"
+            ))
 
         
 
 
     def click_edit_note(self, title):
+        with allure.step(f"Clicking the 'Edit' button for the note with title '{title}'"):
+            edit_locator = (
+                By.XPATH,
+                f"//h5[text()='{title}']/ancestor::div[contains(@class,'card')]//button[contains(text(),'Edit')]"
+            )
 
-        edit_locator = (
-            By.XPATH,
-            f"//h5[text()='{title}']/ancestor::div[contains(@class,'card')]//button[contains(text(),'Edit')]"
-        )
-
-        self.click(edit_locator)
+            self.click(edit_locator)
     def mark_note_as_completed(self, title):
+        with allure.step(f"Marking the note with title '{title}' as completed by checking the checkbox"):
+            checkbox_locator = (
+                By.XPATH,
+                f"//div[@data-testid='note-card-title' and text()='{title}']"
+                f"/ancestor::div[@data-testid='note-card']"
+                f"//input[@type='checkbox']"
+            )
 
-        checkbox_locator = (
-            By.XPATH,
-            f"//div[@data-testid='note-card-title' and text()='{title}']"
-            f"/ancestor::div[@data-testid='note-card']"
-            f"//input[@type='checkbox']"
-        )
-
-        self.check_checkbox(checkbox_locator)
+            self.check_checkbox(checkbox_locator)
+        

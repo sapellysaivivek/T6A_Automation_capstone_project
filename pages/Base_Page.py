@@ -1,12 +1,13 @@
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import NoSuchElementException
-
+from selenium.common.exceptions import TimeoutException
+import allure
 from ai.locator_healer import heal_locator
 
 from selenium.common.exceptions import (
     ElementClickInterceptedException,
-    TimeoutException
+    TimeoutException,
+    NoSuchElementException
 )
 
 from selenium.webdriver.support.ui import Select

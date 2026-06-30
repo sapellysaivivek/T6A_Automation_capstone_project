@@ -1,13 +1,14 @@
 import pytest
 import allure
 
+from config.config import BROWSERS
 from fixtures.browser_fixture import get_driver
 from fixtures.get_token import get_token
-@pytest.fixture(scope="function")
-def driver():
-
-    driver = get_driver()
-
+@pytest.fixture(scope="function" , params=BROWSERS)
+def driver(request):
+    
+    driver = get_driver(request.param)
+    
     yield driver
 
     driver.quit()
@@ -28,9 +29,11 @@ def pytest_runtest_makereport(item):
         driver = item.funcargs.get("driver")
 
         if driver:
-
-            allure.attach(
-                driver.get_screenshot_as_png(),
-                name="failure_screenshot",
-                attachment_type=allure.attachment_type.PNG
-            )
+            try:
+                allure.attach(
+                    driver.get_screenshot_as_png(),
+                    name="failure_screenshot",
+                    attachment_type=allure.attachment_type.PNG
+                )
+            except Exception as e:
+                print(f"Could not capture screenshot: {e}")
