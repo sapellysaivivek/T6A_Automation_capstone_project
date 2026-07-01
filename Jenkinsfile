@@ -55,7 +55,7 @@ pipeline {
 
                 bat '''
                 call venv\\Scripts\\activate
-                pytest -m ui -n 4 -v --alluredir=allure-results
+                pytest -m api -n 4 -v --alluredir=allure-results
                 '''
 
             }
@@ -68,6 +68,17 @@ pipeline {
                 bat '''
                 call venv\\Scripts\\activate
                 pytest -m ui -v --alluredir=allure-results
+                '''
+
+            }
+        }
+        stage('Run Api and ui integrating tests') {
+
+            steps {
+
+                bat '''
+                call venv\\Scripts\\activate
+                pytest -m ui and api -v --alluredir=allure-results
                 '''
 
             }
