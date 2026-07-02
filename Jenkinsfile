@@ -55,7 +55,7 @@ pipeline {
 
                 bat '''
                 call venv\\Scripts\\activate
-                pytest -m api -n 4 -v --alluredir=allure-results
+                pytest -m api --reruns 2 --reruns-delay 5 -n 4 -v --alluredir=allure-results
                 '''
 
             }
