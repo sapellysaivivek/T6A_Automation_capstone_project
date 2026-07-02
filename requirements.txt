@@ -6,4 +6,4 @@ pytest-xdist
 allure-pytest
 openai
 beautifulsoup4
-
+pytest-rerunfailures
