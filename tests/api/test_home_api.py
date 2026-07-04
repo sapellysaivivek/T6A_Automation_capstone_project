@@ -69,7 +69,8 @@ def test_delete_note_api(token):
 @allure.feature("NOTES MANAGEMENT API")
 @allure.story("api response time within 2s")
 @allure.description("This test verifies that the response time for the /api/notes/ endpoint is within 2 seconds.")
-@pytest.mark.api.flaky(reruns=3, reruns_delay=5)
+@pytest.mark.api
+@pytest.mark.flaky(reruns=3, reruns_delay=5)
 def test_notes_api_response_time(token):
     start_time = time.time()
     response = get("https://practice.expandtesting.com/notes/api/notes/", token)
