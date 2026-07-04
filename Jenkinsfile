@@ -78,7 +78,7 @@ pipeline {
 
                 bat '''
                 call venv\\Scripts\\activate
-                pytest -m ui and api -v --alluredir=allure-results
+                pytest -m uiandapi -v --rerun 2 --alluredir=allure-results
                 '''
 
             }
