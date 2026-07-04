@@ -55,7 +55,7 @@ pipeline {
 
                 bat '''
                 call venv\\Scripts\\activate
-                pytest -m api -n 4 -v --alluredir=allure-results
+                pytest -m api -n 4 -v --reruns 2 --alluredir=allure-results
                 '''
 
             }
@@ -67,7 +67,7 @@ pipeline {
 
                 bat '''
                 call venv\\Scripts\\activate
-                pytest -m ui -v --rerun 2 --alluredir=allure-results
+                pytest -m ui -v --reruns 2 --alluredir=allure-results
                 '''
 
             }
@@ -78,7 +78,7 @@ pipeline {
 
                 bat '''
                 call venv\\Scripts\\activate
-                pytest -m uiandapi -v --rerun 2 --alluredir=allure-results
+                pytest -m uiandapi -v --reruns 2 --alluredir=allure-results
                 '''
 
             }
