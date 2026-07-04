@@ -90,7 +90,7 @@ pipeline {
 
                 allure(
                     includeProperties: false,
-                    results: [[path: 'allure-results']]
+                    results: [[path: 'reports/allure-results']]
                 )
 
             }
