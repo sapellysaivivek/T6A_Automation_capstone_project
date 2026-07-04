@@ -1,4 +1,4 @@
 BASE_URL = "https://practice.expandtesting.com/notes/app"
 ECXE = "remote"
-BROWSERS = ["edge"]
+BROWSERS = ["chrome", "edge"]
 enable_self_healing = True
