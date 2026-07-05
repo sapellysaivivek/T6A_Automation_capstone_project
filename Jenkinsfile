@@ -88,9 +88,7 @@ pipeline {
 
             steps {
 
-                allure(
-                   //do nothing
-                )
+                echo 'Generating Allure Report...'
 
             }
         }
