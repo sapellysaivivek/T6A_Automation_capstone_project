@@ -89,7 +89,7 @@ pipeline {
             steps {
 
                 allure(
-                    echo: true,
+                   //do nothing
                 )
 
             }
