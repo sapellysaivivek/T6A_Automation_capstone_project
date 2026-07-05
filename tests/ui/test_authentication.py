@@ -4,6 +4,7 @@ from pages.login_page import LoginPage
 from selenium.webdriver.common.by import By
 from utils.logger import get_logger
 import allure
+import random
 logger = get_logger(__name__)
 @allure.feature("LOGIN")
 #TC-01 Login-01 - Verify that a user can log in with valid credentials.

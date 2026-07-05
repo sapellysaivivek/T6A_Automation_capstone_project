@@ -1,5 +1,6 @@
 import allure
 import pytest
+import random
 import pages.home_page as home_page
 from pages.Base_Page import BasePage
 from pages.login_page import LoginPage
@@ -19,10 +20,11 @@ def test_add_note( driver):
     login_page = LoginPage(driver)
     login_page.click_login("saiviveksapelly@gmail.com" , "142536475869")
     home_page_obj = home_page.HomePage(driver)
-    home_page_obj.create_note("Work","Test_Note","This is a test note.",True)
+    randnum = random.randint(1, 1000)
+    home_page_obj.create_note("Work",f"Test_Note_{randnum}","This is a test note.",True)
     bp = BasePage(driver)
 
-    assert bp.is_visible((By.XPATH, "//div[@data-testid='note-card-title' and text()='Test_Note']"))
+    assert bp.is_visible((By.XPATH, f"//div[@data-testid='note-card-title' and text()='Test_Note_{randnum}']"))
     
     
     
@@ -32,6 +34,7 @@ def test_add_note( driver):
 @allure.description("This test verifies that a user cannot create a note with empty title.")
 @pytest.mark.ui
 def test_add_note_empty_title(driver):
+    
     login_page = LoginPage(driver)
     login_page.click_login("saiviveksapelly@gmail.com" , "142536475869")
     home_page_obj = home_page.HomePage(driver)
@@ -73,10 +76,11 @@ def test_add_note_without_completed(driver):
     login_page = LoginPage(driver)
     login_page.click_login("saiviveksapelly@gmail.com" , "142536475869")
     home_page_obj = home_page.HomePage(driver)
-    home_page_obj.create_note("Work","Test_Note","This is a test note.",False)
+    randnum = random.randint(1, 1000)
+    home_page_obj.create_note("Work",f"Test_Note_{randnum}","This is a test note.",False)
     bp = BasePage(driver)
-    assert bp.is_visible((By.XPATH, "//div[@data-testid='note-card-title' and text()='Test_Note']"))
-    home_page_obj.delete_note("Test_Note")
+    assert bp.is_visible((By.XPATH, f"//div[@data-testid='note-card-title' and text()='Test_Note_{randnum}']"))
+    home_page_obj.delete_note(f"Test_Note_{randnum}")
 #TC-20 create note with whitespace title 
 
 @allure.story("creating notes with whitespace title")
