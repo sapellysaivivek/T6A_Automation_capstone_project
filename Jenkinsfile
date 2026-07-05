@@ -88,7 +88,10 @@ pipeline {
 
             steps {
 
-                echo 'Generating Allure Report...'
+                allure(
+                    i]
+                    results: [[path: 'reports/allure-results']]
+                )
 
             }
         }
