@@ -89,7 +89,7 @@ pipeline {
             steps {
 
                 allure(
-                    includeProperties: false,
+                    commandline: 'Allure',
                     results: [[path: 'reports/allure-results']]
                 )
 
